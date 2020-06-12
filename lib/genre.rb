@@ -1,36 +1,38 @@
-require_relative './concerns/findable.rb'
+require_relative './concerns/findable'
 
-class Genre
-  extend Concerns::Findable
-  attr_accessor :name, :songs
+ class Genre
 
-  @@all = []
+   attr_accessor :name, :artist, :song
 
-  def initialize(name)
-    @name = name 
+   extend Concerns::Findable
+
+   @@all = []
+
+   def initialize(name)
+    @name = name
     @songs = []
-  end 
+   end
 
-  def self.all 
-    @@all 
-  end 
+   def self.all
+    @@all
+   end
 
-  def save 
-    @@all << self 
-  end 
+   def save
+    @@all << self
+   end
 
-  def self.destroy_all
-    @@all.clear
-  end 
+   def songs
+    @songs
+   end
 
-  def self.create(name)
-    genres = new(name)
-    genres.save 
-    genres 
-  end 
+   def self.destroy_all
+    @@all = []
+  end
 
-  def artists 
-    songs.collect {|s| s.artist}.uniq
-  end 
+  def artists
+   artists = []
+   self.songs.map { |song| artists << song.artist }
+   artists.uniq
+  end
 
-end
+ end
